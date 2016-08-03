@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Вадим Иванов](https://up.htmlacademy.ru/javascript/6/user/6537).
-* Наставник: `Неизвестно`.
+* Наставник: `NONAME`.
 
 ---
 
