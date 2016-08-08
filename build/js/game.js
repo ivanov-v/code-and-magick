@@ -395,18 +395,50 @@ window.Game = (function() {
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var messages = {
+        'intro': ['Привет мужик!', 'Чтобы начать, нажми', 'на длинную кнопку!'],
+        'pause': ['Игра остановлена...', 'Зачем так?'],
+        'fail': ['Извини', 'но ты проиграл!'],
+        'win': ['Ты куда-то попал!', 'Жми длинную кнопку', 'чтобы начать!']
+      };
+      var drawMessage = function(context, message) {
+        context.beginPath();
+        context.moveTo(370, 110);
+        context.lineTo(600, 110);
+        context.lineTo(610, 260);
+        context.lineTo(340, 270);
+        context.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        context.fill();
+        context.beginPath();
+        context.moveTo(360, 100);
+        context.lineTo(590, 100);
+        context.lineTo(600, 250);
+        context.lineTo(330, 260);
+        context.fillStyle = '#FFFFFF';
+        context.fill();
+        context.font = '16px PT Mono';
+        context.textBaseline = 'hanging';
+        context.fillStyle = '#000000';
+        var TEXT_START_X = 380;
+        var textStartY = 130;
+        var LINE_HEIGHT = 25;
+        message.forEach(function(string) {
+          context.fillText(string, TEXT_START_X, textStartY);
+          textStartY += LINE_HEIGHT;
+        });
+      };
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          drawMessage(this.ctx, messages.win);
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          drawMessage(this.ctx, messages.fail);
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          drawMessage(this.ctx, messages.pause);
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          drawMessage(this.ctx, messages.intro);
           break;
       }
     },
