@@ -396,10 +396,26 @@ window.Game = (function() {
      */
     _drawPauseScreen: function() {
       var messages = {
-        'intro': ['Привет мужик!', 'Чтобы начать, нажми', 'на длинную кнопку!'],
-        'pause': ['Игра остановлена...', 'Зачем так?'],
-        'fail': ['Извини', 'но ты проиграл!'],
-        'win': ['Ты куда-то попал!', 'Жми длинную кнопку', 'чтобы начать!']
+        'intro': 'Привет мужик! Чтобы начать, нажми на длинную кнопку!',
+        'pause': 'Игра остановлена... Зачем так?',
+        'fail': 'Извини, но ты проиграл!',
+        'win': 'Ты куда-то попал! Жми длинную кнопку, чтобы начать!'
+      };
+      var drawText = function(context, text, left, top, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+        for (var i = 0; i < words.length; i++) {
+          var testLine = line + words[i] + ' ';
+          var testWidth = context.measureText(testLine).width;
+          if (testWidth > maxWidth) {
+            context.fillText(line, left, top);
+            line = words[i] + ' ';
+            top += lineHeight;
+          } else {
+            line = testLine;
+          }
+        }
+        context.fillText(line, left, top);
       };
       var drawMessage = function(context, message) {
         context.beginPath();
@@ -420,12 +436,10 @@ window.Game = (function() {
         context.textBaseline = 'hanging';
         context.fillStyle = '#000000';
         var TEXT_START_X = 380;
-        var textStartY = 130;
+        var TEXT_START_Y = 130;
         var LINE_HEIGHT = 25;
-        message.forEach(function(string) {
-          context.fillText(string, TEXT_START_X, textStartY);
-          textStartY += LINE_HEIGHT;
-        });
+        var MAX_LINE_WIDTH = 200;
+        drawText(context, message, TEXT_START_X, TEXT_START_Y, MAX_LINE_WIDTH, LINE_HEIGHT);
       };
       switch (this.state.currentStatus) {
         case Verdict.WIN:
