@@ -401,45 +401,72 @@ window.Game = (function() {
         'fail': 'Извини, но ты проиграл!',
         'win': 'Ты куда-то попал! Жми длинную кнопку, чтобы начать!'
       };
-      var drawText = function(context, text, left, top, maxWidth, lineHeight) {
+      var screenConfig = {
+        'x': 340,
+        'y': 120,
+        'width': 250,
+        'skew': 20,
+        'padding': 20,
+        'fill': '#FFFFFF',
+        'shadowShift': 10,
+        'shadowFill': 'rgba(0, 0, 0, 0.7)',
+        'font': '16px PT Mono',
+        'textBaseline': 'hanging',
+        'textFill': '#000000',
+        'lineHeight': 20
+      };
+      var drawShadow = function(context, config, height) {
+        var x = config.x + config.shadowShift;
+        var y = config.y + config.shadowShift;
+        context.beginPath();
+        context.moveTo(x, y);
+        context.lineTo(x + config.width, y);
+        context.lineTo(x + config.width + config.skew, height + config.shadowShift);
+        context.lineTo(x - config.skew, height + config.shadowShift);
+        context.fillStyle = config.shadowFill;
+        context.fill();
+      };
+      var drawScreen = function(context, config, height) {
+        context.beginPath();
+        context.moveTo(config.x, config.y);
+        context.lineTo(config.x + config.width, config.y);
+        context.lineTo(config.x + config.width + config.skew, height);
+        context.lineTo(config.x - config.skew, height);
+        context.fillStyle = config.fill;
+        context.fill();
+      };
+      var drawText = function(context, config, text, test) {
+        context.font = config.font;
+        context.textBaseline = config.textBaseline;
+        context.fillStyle = config.textFill;
+        var maxWidth = config.width - config.padding * 2;
+        var top = config.y + config.padding;
+        var left = config.x + config.padding;
         var words = text.split(' ');
         var line = '';
         for (var i = 0; i < words.length; i++) {
           var testLine = line + words[i] + ' ';
           var testWidth = context.measureText(testLine).width;
           if (testWidth > maxWidth) {
-            context.fillText(line, left, top);
+            if (test) {
+              context.fillText(line, -maxWidth, 0);
+            } else {
+              context.fillText(line, left, top);
+            }
             line = words[i] + ' ';
-            top += lineHeight;
+            top += config.lineHeight;
           } else {
             line = testLine;
           }
         }
         context.fillText(line, left, top);
+        return top + config.lineHeight + config.padding;
       };
       var drawMessage = function(context, message) {
-        context.beginPath();
-        context.moveTo(370, 110);
-        context.lineTo(600, 110);
-        context.lineTo(610, 260);
-        context.lineTo(340, 270);
-        context.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        context.fill();
-        context.beginPath();
-        context.moveTo(360, 100);
-        context.lineTo(590, 100);
-        context.lineTo(600, 250);
-        context.lineTo(330, 260);
-        context.fillStyle = '#FFFFFF';
-        context.fill();
-        context.font = '16px PT Mono';
-        context.textBaseline = 'hanging';
-        context.fillStyle = '#000000';
-        var TEXT_START_X = 380;
-        var TEXT_START_Y = 130;
-        var LINE_HEIGHT = 25;
-        var MAX_LINE_WIDTH = 200;
-        drawText(context, message, TEXT_START_X, TEXT_START_Y, MAX_LINE_WIDTH, LINE_HEIGHT);
+        var height = drawText(context, screenConfig, message, true);
+        drawShadow(context, screenConfig, height);
+        drawScreen(context, screenConfig, height);
+        drawText(context, screenConfig, message);
       };
       switch (this.state.currentStatus) {
         case Verdict.WIN:
