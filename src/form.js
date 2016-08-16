@@ -36,7 +36,7 @@ window.form = (function() {
     },
 
     getRating: function() {
-      Array.prototype.forEach.call(formRatingElems, function(star) {
+      [].forEach.call(formRatingElems, function(star) {
         if (star.checked === true) {
           form.rating = star.value;
         }
@@ -107,7 +107,7 @@ window.form = (function() {
     form.validate();
   };
 
-  Array.prototype.forEach.call(formRatingElems, function(star) {
+  [].forEach.call(formRatingElems, function(star) {
     star.onchange = function() {
       form.validate();
     };
