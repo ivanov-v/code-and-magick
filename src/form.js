@@ -35,9 +35,9 @@ window.form = (function() {
       }
     },
 
-    getRating: function() {
+    setRating: function() {
       [].forEach.call(formRatingElems, function(star) {
-        if (star.checked === true) {
+        if (star.checked) {
           form.rating = star.value;
         }
       });
@@ -56,7 +56,7 @@ window.form = (function() {
     },
 
     validate: function() {
-      form.getRating();
+      form.setRating();
 
       if (formNameField.value !== '' && formReviewField.value !== '') {
         formReviewFields.style.display = 'none';
