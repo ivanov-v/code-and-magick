@@ -47,6 +47,14 @@ window.form = (function() {
       return form.rating >= form.minRating;
     },
 
+    isNameSet: function() {
+      return formNameField.value !== '' ? true : false;
+    },
+
+    isReviewSet: function() {
+      return formReviewField.value !== '' ? true : false;
+    },
+
     enable: function() {
       formSubmitBtn.disabled = false;
     },
@@ -58,7 +66,7 @@ window.form = (function() {
     validate: function() {
       form.setRating();
 
-      if (formNameField.value !== '' && formReviewField.value !== '') {
+      if (form.isNameSet() && form.isReviewSet()) {
         formReviewFields.style.display = 'none';
         form.enable();
       } else {
@@ -66,7 +74,7 @@ window.form = (function() {
         form.disable();
       }
 
-      if (formNameField.value !== '') {
+      if (form.isNameSet()) {
         formNameLabel.style.display = 'none';
       } else {
         formNameLabel.removeAttribute('style');
@@ -74,7 +82,7 @@ window.form = (function() {
 
       if (form.isRatingNormal()) {
         formReviewLabel.style.display = 'none';
-        if (formNameField.value !== '') {
+        if (form.isNameSet()) {
           formReviewFields.style.display = 'none';
           form.enable();
         } else {
@@ -84,7 +92,7 @@ window.form = (function() {
       } else {
         formReviewLabel.removeAttribute('style');
 
-        if (formReviewField.value !== '') {
+        if (form.isReviewSet()) {
           formReviewLabel.style.display = 'none';
         } else {
           formReviewLabel.removeAttribute('style');
