@@ -63,39 +63,47 @@ window.form = (function() {
       formSubmitBtn.disabled = true;
     },
 
+    hide: function(elem) {
+      elem.style.display = 'none';
+    },
+
+    show: function(elem) {
+      elem.removeAttribute('style');
+    },
+
     validate: function() {
       form.setRating();
 
       if (form.isNameSet() && form.isReviewSet()) {
-        formReviewFields.style.display = 'none';
+        form.hide(formReviewFields);
         form.enable();
       } else {
-        formReviewFields.removeAttribute('style');
+        form.show(formReviewFields);
         form.disable();
       }
 
       if (form.isNameSet()) {
-        formNameLabel.style.display = 'none';
+        form.hide(formNameLabel);
       } else {
-        formNameLabel.removeAttribute('style');
+        form.show(formNameLabel);
       }
 
       if (form.isRatingNormal()) {
-        formReviewLabel.style.display = 'none';
+        form.hide(formReviewLabel);
         if (form.isNameSet()) {
-          formReviewFields.style.display = 'none';
+          form.hide(formReviewFields);
           form.enable();
         } else {
-          formReviewFields.removeAttribute('style');
+          form.show(formReviewFields);
           form.disable();
         }
       } else {
-        formReviewLabel.removeAttribute('style');
+        form.show(formReviewLabel);
 
         if (form.isReviewSet()) {
-          formReviewLabel.style.display = 'none';
+          form.hide(formReviewLabel);
         } else {
-          formReviewLabel.removeAttribute('style');
+          form.show(formReviewLabel);
         }
       }
     }
