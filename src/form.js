@@ -43,7 +43,7 @@ window.form = (function() {
       });
     },
 
-    normalRating: function() {
+    isRatingNormal: function() {
       return form.rating >= form.minRating;
     },
 
@@ -72,7 +72,7 @@ window.form = (function() {
         formNameLabel.removeAttribute('style');
       }
 
-      if (form.normalRating()) {
+      if (form.isRatingNormal()) {
         formReviewLabel.style.display = 'none';
         if (formNameField.value !== '') {
           formReviewFields.style.display = 'none';
