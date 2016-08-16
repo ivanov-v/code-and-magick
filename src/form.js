@@ -74,14 +74,6 @@ window.form = (function() {
     validate: function() {
       form.setRating();
 
-      if (form.isNameSet() && form.isReviewSet()) {
-        form.hide(formReviewFields);
-        form.enable();
-      } else {
-        form.show(formReviewFields);
-        form.disable();
-      }
-
       if (form.isNameSet()) {
         form.hide(formNameLabel);
       } else {
@@ -98,12 +90,17 @@ window.form = (function() {
           form.disable();
         }
       } else {
-        form.show(formReviewLabel);
-
         if (form.isReviewSet()) {
           form.hide(formReviewLabel);
         } else {
           form.show(formReviewLabel);
+        }
+        if (form.isNameSet() && form.isReviewSet()) {
+          form.hide(formReviewFields);
+          form.enable();
+        } else {
+          form.show(formReviewFields);
+          form.disable();
         }
       }
     }
@@ -120,7 +117,9 @@ window.form = (function() {
   };
 
   formReviewField.oninput = function() {
-    form.validate();
+    if (!form.isRatingNormal()) {
+      form.validate();
+    }
   };
 
   [].forEach.call(formRatingElems, function(star) {
