@@ -123,6 +123,17 @@ window.form = (function() {
       browserCookies.defaults.expires = form.getCookiesExpiresDays();
       browserCookies.set('review-mark', form.rating);
       browserCookies.set('review-name', formNameField.value);
+    },
+
+    fillFields: function() {
+      var reviewMarkValue = browserCookies.get('review-mark');
+      var reviewNameValue = browserCookies.get('review-name');
+      [].forEach.call(formRatingElems, function(star) {
+        if (star.value === reviewMarkValue) {
+          star.checked = true;
+        }
+      });
+      formNameField.value = reviewNameValue;
     }
   };
 
@@ -130,11 +141,10 @@ window.form = (function() {
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
     form.close();
+    form.setCookies();
   };
 
-  formNameField.oninput = function() {
-    form.validate();
-  };
+  formNameField.oninput = form.validate;
 
   formReviewField.oninput = function() {
     if (!form.isRatingNormal()) {
@@ -143,13 +153,12 @@ window.form = (function() {
   };
 
   [].forEach.call(formRatingElems, function(star) {
-    star.onchange = function() {
-      form.validate();
-    };
+    star.onchange = form.validate;
   });
 
   formElem.onsubmit = form.setCookies;
 
+  form.fillFields();
   form.validate();
 
   return form;
