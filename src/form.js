@@ -1,5 +1,7 @@
 'use strict';
 
+var browserCookies = require('browser-cookies');
+
 window.form = (function() {
   var formContainer = document.querySelector('.overlay-container');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -103,6 +105,24 @@ window.form = (function() {
           form.disable();
         }
       }
+    },
+
+    getCookiesExpiresDays: function(year, month, day) {
+      var currentDate = new Date();
+      var currentYear = currentDate.getFullYear();
+      var birthday = new Date(currentYear, month - 1, day);
+      var lastBirthday = birthday;
+      if (birthday > currentDate) {
+        lastBirthday = new Date(currentYear - 1, month - 1, day);
+      }
+      var days = Math.floor((currentDate - lastBirthday) / 1000 / 60 / 60 / 24);
+      return days;
+    },
+
+    setCookies: function() {
+      browserCookies.defaults.expires = form.getCookiesExpiresDays();
+      browserCookies.set('review-mark', form.rating);
+      browserCookies.set('review-name', formNameField.value);
     }
   };
 
@@ -127,6 +147,8 @@ window.form = (function() {
       form.validate();
     };
   });
+
+  formElem.onsubmit = form.setCookies;
 
   form.validate();
 
