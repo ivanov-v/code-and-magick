@@ -120,7 +120,7 @@ window.form = (function() {
     },
 
     setCookies: function() {
-      browserCookies.defaults.expires = form.getCookiesExpiresDays();
+      browserCookies.defaults.expires = form.getCookiesExpiresDays(1906, 12, 9);
       browserCookies.set('review-mark', form.rating);
       browserCookies.set('review-name', formNameField.value);
     },
