@@ -1,5 +1,7 @@
 'use strict';
 
+var browserCookies = require('browser-cookies');
+
 window.form = (function() {
   var formContainer = document.querySelector('.overlay-container');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -103,6 +105,40 @@ window.form = (function() {
           form.disable();
         }
       }
+    },
+
+    getCookiesExpiresDays: function(year, month, day) {
+      var currentDate = new Date();
+      var currentYear = currentDate.getFullYear();
+      var birthday = new Date(currentYear, month - 1, day);
+      var lastBirthday = birthday;
+      if (birthday > currentDate) {
+        lastBirthday = new Date(currentYear - 1, month - 1, day);
+      }
+      var days = Math.floor((currentDate - lastBirthday) / 1000 / 60 / 60 / 24);
+      return days;
+    },
+
+    setCookies: function() {
+      browserCookies.defaults.expires = form.getCookiesExpiresDays(1906, 12, 9);
+      browserCookies.set('review-mark', form.rating);
+      browserCookies.set('review-name', formNameField.value);
+    },
+
+    fillFields: function() {
+      var reviewMarkValue = browserCookies.get('review-mark');
+      var reviewNameValue = browserCookies.get('review-name');
+      if (reviewMarkValue) {
+        [].forEach.call(formRatingElems, function(star) {
+          if (star.value === reviewMarkValue) {
+            star.checked = true;
+          }
+        });
+      }
+
+      if (reviewNameValue) {
+        formNameField.value = reviewNameValue;
+      }
     }
   };
 
@@ -110,11 +146,10 @@ window.form = (function() {
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
     form.close();
+    form.setCookies();
   };
 
-  formNameField.oninput = function() {
-    form.validate();
-  };
+  formNameField.oninput = form.validate;
 
   formReviewField.oninput = function() {
     if (!form.isRatingNormal()) {
@@ -123,11 +158,12 @@ window.form = (function() {
   };
 
   [].forEach.call(formRatingElems, function(star) {
-    star.onchange = function() {
-      form.validate();
-    };
+    star.onchange = form.validate;
   });
 
+  formElem.onsubmit = form.setCookies;
+
+  form.fillFields();
   form.validate();
 
   return form;
