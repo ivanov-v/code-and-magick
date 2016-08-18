@@ -128,12 +128,17 @@ window.form = (function() {
     fillFields: function() {
       var reviewMarkValue = browserCookies.get('review-mark');
       var reviewNameValue = browserCookies.get('review-name');
-      [].forEach.call(formRatingElems, function(star) {
-        if (star.value === reviewMarkValue) {
-          star.checked = true;
-        }
-      });
-      formNameField.value = reviewNameValue;
+      if (reviewMarkValue) {
+        [].forEach.call(formRatingElems, function(star) {
+          if (star.value === reviewMarkValue) {
+            star.checked = true;
+          }
+        });
+      }
+
+      if (reviewNameValue) {
+        formNameField.value = reviewNameValue;
+      }
     }
   };
 
