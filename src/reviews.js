@@ -36,7 +36,21 @@ var IMAGE_LOAD_TIMEOUT = 10000;
 var getReviewElement = function(review, container) {
   var element = elementToClone.cloneNode(true);
   element.querySelector('.review-text').textContent = review.description;
-  element.querySelector('.review-rating').textContent = review.rating;
+  var reviewRatingElement = element.querySelector('.review-rating');
+  switch (review.rating) {
+    case 2:
+      reviewRatingElement.classList.add('review-rating-two');
+      break;
+    case 3:
+      reviewRatingElement.classList.add('review-rating-three');
+      break;
+    case 4:
+      reviewRatingElement.classList.add('review-rating-four');
+      break;
+    case 5:
+      reviewRatingElement.classList.add('review-rating-five');
+      break;
+  }
   container.appendChild(element);
 
   var image = new Image();
