@@ -27,5 +27,13 @@ form.onClose = function() {
 };
 
 var imagesElements = document.querySelectorAll('.photogallery-image img');
+var imagesLinks = document.querySelectorAll('.photogallery-image');
 var imagesSrc = getImagesSrc(imagesElements);
 var gallery = new Gallery(imagesSrc);
+
+[].forEach.call(imagesLinks, function(link, index) {
+  var linkPosition = index + 1;
+  link.onclick = function() {
+    gallery.show(linkPosition);
+  };
+});
