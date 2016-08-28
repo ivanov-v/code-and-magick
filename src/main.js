@@ -1,9 +1,9 @@
 'use strict';
 
+require('./reviews');
 var Game = require('./game');
 var Gallery = require('./gallery');
 var form = require('./form');
-require('./reviews');
 
 var game = new Game(document.querySelector('.demo'));
 game.initializeLevelAndStart();

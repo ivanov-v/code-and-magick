@@ -30,4 +30,16 @@ var Gallery = function(pictures, activePicture) {
   this.photosСounterElement = photosСounterElement;
 };
 
+Gallery.prototype.show = function(number) {
+
+};
+
+Gallery.prototype.hide = function(number) {
+
+};
+
+Gallery.prototype.setActivePicture = function(number) {
+
+};
+
 module.exports = Gallery;
