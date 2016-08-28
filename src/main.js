@@ -1,6 +1,7 @@
 'use strict';
 
 require('./reviews');
+var getImagesSrc = require('./get-images-src');
 var Game = require('./game');
 var Gallery = require('./gallery');
 var form = require('./form');
@@ -25,5 +26,6 @@ form.onClose = function() {
   game.setDeactivated(false);
 };
 
-var gallery = new Gallery([1, 2, 3, 4], 3);
-console.log(gallery);
+var imagesElements = document.querySelectorAll('.photogallery-image img');
+var imagesSrc = getImagesSrc(imagesElements);
+var gallery = new Gallery(imagesSrc);
