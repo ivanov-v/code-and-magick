@@ -1,6 +1,7 @@
 'use strict';
 
 var Game = require('./game');
+var Gallery = require('./gallery');
 var form = require('./form');
 require('./reviews');
 
@@ -23,3 +24,6 @@ formOpenButton.onclick = function(evt) {
 form.onClose = function() {
   game.setDeactivated(false);
 };
+
+var gallery = new Gallery([1, 2, 3, 4], 3);
+console.log(gallery);
