@@ -1,14 +1,13 @@
 'use strict';
 
-var galleryElement = document.querySelector('.overlay-gallery');
-var galleryPreviewElement = galleryElement.querySelector('.overlay-gallery-preview');
-var leftButtonElement = galleryElement.querySelector('.overlay-gallery-control-left');
-var rightButtonElement = galleryElement.querySelector('.overlay-gallery-control-right');
-var photoNumberElement = galleryElement.querySelector('.preview-number-current');
-var photosСounterElement = galleryElement.querySelector('.preview-number-total');
-var closeButtonElement = galleryElement.querySelector('.overlay-gallery-close');
-
 var Gallery = function(pictures) {
+  var galleryElement = document.querySelector('.overlay-gallery');
+  var galleryPreviewElement = galleryElement.querySelector('.overlay-gallery-preview');
+  var leftButtonElement = galleryElement.querySelector('.overlay-gallery-control-left');
+  var rightButtonElement = galleryElement.querySelector('.overlay-gallery-control-right');
+  var photoNumberElement = galleryElement.querySelector('.preview-number-current');
+  var photosСounterElement = galleryElement.querySelector('.preview-number-total');
+  var closeButtonElement = galleryElement.querySelector('.overlay-gallery-close');
   var self = this;
   this.pictures = pictures;
   this.activePicture = 1;
