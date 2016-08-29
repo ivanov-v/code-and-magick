@@ -2,6 +2,7 @@
 
 var load = require('./load');
 var getReviewElement = require('./review');
+var Review = require('./review-constructor');
 var filters = document.querySelector('.reviews-filter');
 var reviewsContainer = document.querySelector('.reviews-list');
 
@@ -16,9 +17,11 @@ var showFilters = function() {
 hideFilters();
 
 load('http://localhost:1506/api/reviews?callback=getData', function() {
-  window.reviews.forEach(function(review) {
+  window.reviews.forEach(function(reviewData) {
+    var reviewElement = getReviewElement(reviewData);
+    var review = new Review(reviewData, reviewElement);
     console.log(review);
-    getReviewElement(review, reviewsContainer);
+    reviewsContainer.appendChild(review.element);
     showFilters();
   });
 });
