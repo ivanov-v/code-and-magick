@@ -1,8 +1,10 @@
 'use strict';
 
-var Game = require('./game');
-var form = require('./form');
 require('./reviews');
+var getImagesSrc = require('./get-images-src');
+var Game = require('./game');
+var Gallery = require('./gallery');
+var form = require('./form');
 
 var game = new Game(document.querySelector('.demo'));
 game.initializeLevelAndStart();
@@ -23,3 +25,15 @@ formOpenButton.onclick = function(evt) {
 form.onClose = function() {
   game.setDeactivated(false);
 };
+
+var imagesElements = document.querySelectorAll('.photogallery-image img');
+var imagesLinks = document.querySelectorAll('.photogallery-image');
+var imagesSrc = getImagesSrc(imagesElements);
+var gallery = new Gallery(imagesSrc);
+
+[].forEach.call(imagesLinks, function(link, index) {
+  var linkPosition = index + 1;
+  link.onclick = function() {
+    gallery.show(linkPosition);
+  };
+});
