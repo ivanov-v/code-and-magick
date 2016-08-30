@@ -10,7 +10,7 @@ if ('content' in templateElement) {
   elementToClone = templateElement.querySelector('.review');
 }
 
-var getReviewElement = function(review, container) {
+var getReviewElement = function(review) {
   var element = elementToClone.cloneNode(true);
   element.querySelector('.review-text').textContent = review.description;
   var reviewRatingElement = element.querySelector('.review-rating');
@@ -28,7 +28,6 @@ var getReviewElement = function(review, container) {
       reviewRatingElement.classList.add('review-rating-five');
       break;
   }
-  container.appendChild(element);
 
   var image = new Image();
   var imageLoadTimeout;
