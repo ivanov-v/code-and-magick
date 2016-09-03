@@ -1,2 +1,4 @@
+bin/server.js
+bin/data/reviews.js
 src/check.js
 src/*.min.js

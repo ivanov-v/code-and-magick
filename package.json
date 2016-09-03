@@ -26,9 +26,7 @@
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1"
   },
-  "dependencies": {
-    "browser-cookies": "1.0.3"
-  },
+  "dependencies": {},
   "scripts": {
     "build": "webpack --config ./bin/webpack.config.js",
     "start": "node ./bin/server.js",
