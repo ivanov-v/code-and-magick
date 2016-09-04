@@ -1,14 +1,19 @@
 'use strict';
 
-window.getData = function(data) {
-  window.reviews = data;
-};
+var load = function(url, config, callback) {
+  var xhr = new XMLHttpRequest();
 
-var load = function(url, callback) {
-  var script = document.createElement('script');
-  script.src = url;
-  script.onload = callback;
-  document.body.appendChild(script);
+  xhr.onload = function(evt) {
+    callback(evt);
+  };
+
+  xhr.open(
+    'GET', url +
+    '?from=' + (config.from || 0) +
+    '&to=' + (config.to || Infinity) +
+    '&filter=' + (config.filter || 'default')
+  );
+  xhr.send();
 };
 
 module.exports = load;
