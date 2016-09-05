@@ -16,12 +16,14 @@ var showFilters = function() {
 
 hideFilters();
 
-load('http://localhost:1506/api/reviews?callback=getData', function() {
-  window.reviews.forEach(function(reviewData) {
+load('http://localhost:1506/api/reviews', {}, function(response) {
+  var data = JSON.parse(response);
+
+  data.forEach(function(reviewData) {
     var reviewElement = getReviewElement(reviewData);
     var review = new Review(reviewData, reviewElement);
-
     reviewsContainer.appendChild(review.element);
-    showFilters();
   });
+
+  showFilters();
 });

@@ -3,8 +3,8 @@
 var load = function(url, config, callback) {
   var xhr = new XMLHttpRequest();
 
-  xhr.onload = function(evt) {
-    callback(evt);
+  xhr.onerror = function() {
+    console.log('error');
   };
 
   xhr.open(
@@ -13,7 +13,23 @@ var load = function(url, config, callback) {
     '&to=' + (config.to || Infinity) +
     '&filter=' + (config.filter || 'default')
   );
+
   xhr.send();
+
+  xhr.onreadystatechange = function() {
+    if (this.readyState !== 4) {
+      return;
+    }
+
+    if (this.status !== 200) {
+      console.log('error');
+      return;
+    }
+
+    if (callback) {
+      callback(xhr.response);
+    }
+  };
 };
 
 module.exports = load;
