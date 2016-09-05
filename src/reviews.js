@@ -16,7 +16,7 @@ var showFilters = function() {
 
 hideFilters();
 
-load('http://localhost:1506/api/reviews', {}, function(response) {
+load('http://localhost:1506/api/reviews', { from: 2, to: 5 }, function(response) {
   var data = JSON.parse(response);
 
   data.forEach(function(reviewData) {
