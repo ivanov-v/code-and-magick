@@ -27,7 +27,7 @@ var load = function(url, config, callback) {
     }
 
     if (callback) {
-      callback(xhr.response);
+      callback(JSON.parse(xhr.response));
     }
   };
 };
