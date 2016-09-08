@@ -22,7 +22,7 @@ var load = function(url, config, callback) {
     }
 
     if (this.status !== 200) {
-      console.log('error');
+      console.log('load error');
       return;
     }
 

@@ -7,10 +7,12 @@ module.exports = function(list, filterID) {
       newList = list;
       break;
     case 'reviews-recent':
-      newList = list.sort(function(elem) {
-        
+      newList = list.sort(function(a, b) {
+        return b - a;
       });
       break;
+    default:
+      return list;
   }
 
   return newList;
