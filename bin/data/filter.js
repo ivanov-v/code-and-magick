@@ -1,19 +1,28 @@
 'use strict';
 
+var newList;
+
 module.exports = function(list, filterID) {
-  var newList;
   switch (filterID) {
     case 'reviews-all':
-      newList = list;
-      break;
+      return list;
+
     case 'reviews-recent':
       newList = list.sort(function(a, b) {
-        return b - a;
+        return b.created - a.created;
       });
-      break;
+      return newList;
+
+    case 'reviews-good':
+      list.sort(function(a, b) {
+        return b.rating - a.rating;
+      });
+      newList = list.filter(function(item) {
+        return item.rating >= 3;
+      });
+      return newList;
+
     default:
       return list;
   }
-
-  return newList;
 };
