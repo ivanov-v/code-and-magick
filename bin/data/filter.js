@@ -14,11 +14,20 @@ module.exports = function(list, filterID) {
       return newList;
 
     case 'reviews-good':
-      list.sort(function(a, b) {
-        return b.rating - a.rating;
-      });
       newList = list.filter(function(item) {
         return item.rating >= 3;
+      });
+      newList.sort(function(a, b) {
+        return b.rating - a.rating;
+      });
+      return newList;
+
+    case 'reviews-bad':
+      newList = list.filter(function(item) {
+        return item.rating < 3;
+      });
+      newList.sort(function(a, b) {
+        return a.rating - b.rating;
       });
       return newList;
 

@@ -63,20 +63,18 @@ var preloadReviews = function() {
   hideFilters();
   load(REVIEWS_URL, reviewsConfig, function(data) {
     renderReviews(data);
-    increasingCounters();
     showFilters();
     showGetMoreButton();
   });
 };
 
 var onClickGetMore = function() {
+  increasingCounters();
   load(REVIEWS_URL, reviewsConfig, function(data) {
     renderReviews(data);
-    if (data.length <= 2) {
+    if (data.length < 3) {
       hideGetMoreButton();
-      return;
     }
-    increasingCounters();
   });
 };
 
