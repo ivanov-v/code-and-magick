@@ -31,6 +31,12 @@ module.exports = function(list, filterID) {
       });
       return newList;
 
+    case 'reviews-popular':
+      list.sort(function(a, b) {
+        return b.review_usefulness - a.review_usefulness;
+      });
+      return list;
+
     default:
       return list;
   }
