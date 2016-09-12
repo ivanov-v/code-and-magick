@@ -14,6 +14,7 @@ var getReviewElement = function(review) {
   var element = elementToClone.cloneNode(true);
   element.querySelector('.review-text').textContent = review.description;
   var reviewRatingElement = element.querySelector('.review-rating');
+  console.log(review.rating);
   switch (review.rating) {
     case 2:
       reviewRatingElement.classList.add('review-rating-two');
