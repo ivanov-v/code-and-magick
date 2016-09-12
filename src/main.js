@@ -37,3 +37,37 @@ var gallery = new Gallery(imagesSrc);
     gallery.show(linkPosition);
   };
 });
+
+var clouds = document.querySelector('.header-clouds');
+var THROTTLE_TIME = 100;
+
+var throttle = function(func, time) {
+  var timerId = 0;
+
+  return function() {
+    clearTimeout(timerId);
+    timerId = setTimeout(func, time);
+  };
+};
+
+var pauseGame = function() {
+  game.setGameStatus(Game.Verdict.PAUSE);
+};
+
+var isElemVisible = function(elem) {
+  return elem.getBoundingClientRect().bottom > 0 ? true : false;
+};
+
+var throttledPauseGame = throttle(pauseGame, THROTTLE_TIME);
+
+var gameParallax = function(elem) {
+  if (isElemVisible(game.container)) {
+    elem.style.backgroundPosition = window.pageYOffset + 'px';
+  } else {
+    throttledPauseGame();
+  }
+};
+
+window.addEventListener('scroll', function() {
+  gameParallax(clouds);
+});
