@@ -5,6 +5,7 @@ var getImagesSrc = require('./get-images-src');
 var Game = require('./game');
 var Gallery = require('./gallery');
 var form = require('./form');
+var throttle = require('./throttle');
 
 var game = new Game(document.querySelector('.demo'));
 game.initializeLevelAndStart();
@@ -38,17 +39,9 @@ var gallery = new Gallery(imagesSrc);
   };
 });
 
+
 var clouds = document.querySelector('.header-clouds');
 var THROTTLE_TIME = 100;
-
-var throttle = function(func, time) {
-  var timerId = 0;
-
-  return function() {
-    clearTimeout(timerId);
-    timerId = setTimeout(func, time);
-  };
-};
 
 var pauseGame = function() {
   game.setGameStatus(Game.Verdict.PAUSE);
@@ -62,7 +55,7 @@ var throttledPauseGame = throttle(pauseGame, THROTTLE_TIME);
 
 var gameParallax = function(elem) {
   if (isElemVisible(game.container)) {
-    elem.style.backgroundPosition = window.pageYOffset + 'px';
+    elem.style.backgroundPositionX = window.pageYOffset + 'px';
   } else {
     throttledPauseGame();
   }
