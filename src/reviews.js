@@ -78,10 +78,24 @@ var onClickGetMore = function() {
   });
 };
 
+var saveFilter = function(id) {
+  localStorage.setItem('filter', id);
+};
+
+var restoreFilter = function() {
+  var savedFilterID = localStorage.getItem('filter');
+  if (savedFilterID && savedFilterID !== 'reviews-all') {
+    document.querySelector('#' + savedFilterID).click();
+  } else {
+    preloadReviews();
+  }
+};
+
 var onChangeFilter = function(evt) {
   var target = evt.target;
   var filterId = target.id;
 
+  saveFilter(filterId);
   reviewsConfig.filter = filterId;
   clearCounters();
   removeAllReviews();
@@ -94,4 +108,4 @@ var onChangeFilter = function(evt) {
 
 getMoreButton.addEventListener('click', onClickGetMore);
 filters.addEventListener('change', onChangeFilter, true);
-preloadReviews();
+restoreFilter();
