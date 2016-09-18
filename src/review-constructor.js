@@ -1,29 +1,31 @@
 'use strict';
 
+var nodesEach = require('./nodesEach');
+
 var Review = function(data, element) {
-  var self = this;
   this.data = data;
   this.element = element;
-  this.answersElements = this.element.querySelectorAll('.review-quiz-answer');
-
-  [].forEach.call(this.answersElements, function(button, index, buttons) {
-    button.onclick = function() {
-      self.onQuizAnswerClick(buttons, index);
-    };
-  });
-
-  this.removeControlListeners = function() {
-    [].forEach.call(this.answersElements, function(button) {
-      button.onclick = null;
-    });
-  };
+  this.answersButtons = this.element.querySelectorAll('.review-quiz-answer');
+  this.onAnswerClick = this.onAnswerClick.bind(this);
+  this.init();
 };
 
-Review.prototype.onQuizAnswerClick = function(buttons, currentButton) {
-  [].forEach.call(buttons, function(button) {
+Review.prototype.onAnswerClick = function(evt) {
+  if (!evt.target.classList.contains('review-quiz-answer')) {
+    return;
+  }
+  nodesEach(this.answersButtons, function(button) {
     button.classList.remove('review-quiz-answer-active');
   });
-  buttons[currentButton].classList.add('review-quiz-answer-active');
+  evt.target.classList.add('review-quiz-answer-active');
+};
+
+Review.prototype.init = function() {
+  this.element.addEventListener('click', this.onAnswerClick);
+};
+
+Review.prototype.destroy = function() {
+  this.element.removeEventListener('click', this.onAnswerClick);
 };
 
 module.exports = Review;
