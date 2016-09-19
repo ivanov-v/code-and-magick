@@ -8,7 +8,6 @@ var Gallery = function(pictures) {
   var photoNumberElement = galleryElement.querySelector('.preview-number-current');
   var photosСounterElement = galleryElement.querySelector('.preview-number-total');
   var closeButtonElement = galleryElement.querySelector('.overlay-gallery-close');
-  var self = this;
   this.pictures = pictures;
   this.activePicture = 1;
   this.rootElement = galleryElement;
@@ -21,37 +20,33 @@ var Gallery = function(pictures) {
   this.photoNumberElement = photoNumberElement;
   this.photosСounterElement = photosСounterElement;
 
-  this.addControlsListeners = function() {
-    this.controls.closeButtonElement.onclick = function() {
-      self.onCloseButtonElementClick();
-    };
+  this.onCloseButtonElementClick = this.onCloseButtonElementClick.bind(this);
+  this.onLeftButtonElementClick = this.onLeftButtonElementClick.bind(this);
+  this.onRightButtonElementClick = this.onRightButtonElementClick.bind(this);
+};
 
-    this.controls.leftButtonElement.onclick = function() {
-      self.onLeftButtonElementClick();
-    };
+Gallery.prototype.init = function() {
+  this.controls.closeButtonElement.addEventListener('click', this.onCloseButtonElementClick);
+  this.controls.leftButtonElement.addEventListener('click', this.onLeftButtonElementClick);
+  this.controls.rightButtonElement.addEventListener('click', this.onRightButtonElementClick);
+};
 
-    this.controls.rightButtonElement.onclick = function() {
-      self.onRightButtonElementClick();
-    };
-  };
-
-  this.deleteControlsListeners = function() {
-    this.controls.closeButtonElement.onclick = null;
-    this.controls.leftButtonElement.onclick = null;
-    this.controls.rightButtonElement.onclick = null;
-  };
+Gallery.prototype.destroy = function() {
+  this.controls.closeButtonElement.removeEventListener('click', this.onCloseButtonElementClick);
+  this.controls.leftButtonElement.removeEventListener('click', this.onLeftButtonElementClick);
+  this.controls.rightButtonElement.removeEventListener('click', this.onRightButtonElementClick);
 };
 
 Gallery.prototype.show = function(imageNumber) {
   this.rootElement.classList.remove('invisible');
   this.setActivePicture(imageNumber);
   this.setCounters();
-  this.addControlsListeners();
+  this.init();
 };
 
 Gallery.prototype.hide = function() {
   this.rootElement.classList.add('invisible');
-  this.deleteControlsListeners();
+  this.destroy();
 };
 
 Gallery.prototype.setCounters = function() {
