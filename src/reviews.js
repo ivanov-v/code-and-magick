@@ -1,6 +1,7 @@
 'use strict';
 
 var load = require('./load');
+var nodesEach = require('./nodesEach');
 var getReviewElement = require('./review');
 var Review = require('./review-constructor');
 var filters = document.querySelector('.reviews-filter');
@@ -54,7 +55,8 @@ var renderReviews = function(data) {
 
 var removeAllReviews = function() {
   var reviews = reviewsContainer.querySelectorAll('.review');
-  reviews.forEach(function(review) {
+
+  nodesEach(reviews, function(review) {
     reviewsContainer.removeChild(review);
   });
 };
